@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  updater:
+    restart: always
+    image: iiko-middleware-service:0.1.0-SNAPSHOT
+    container_name: iiko-updater
+    ports:
+      - ${server_port}:${server_port}
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - mynet
+  db:
+    image: postgres:latest
+    restart: always
+    volumes:
+#      - ./postgres-data:/var/lib/postgresql/data
+       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_USER=${db_user}
+      - POSTGRES_PASSWORD=${db_password}
+      - POSTGRES_DB=${db_name}
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    driver: bridge
