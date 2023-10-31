@@ -1,4 +1,4 @@
-# IIKO-update-service
+# IIKO-middleware-service
 
 This service is done as an exercise to practice ZIO, quill and caliban
 
